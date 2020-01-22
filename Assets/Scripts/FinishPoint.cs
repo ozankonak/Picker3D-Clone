@@ -5,19 +5,30 @@ using UnityEngine;
 
 public class FinishPoint : MonoBehaviour
 {
-    private GameObject cam;
-
-    private void Awake()
-    {
-        cam = Camera.main.gameObject;
-    }
-
     private void OnTriggerEnter(Collider other)
     {
+        //If player will come to finish point
         if (other.gameObject.tag == "Player")
         {
-            cam.transform.position = new Vector3(cam.transform.position.x,3f,cam.transform.position.z);
-            cam.transform.rotation = Quaternion.Euler(4f,0f,0f);
+            //Stop the player
+            GameManager.instance.Paused = true;
+            //Open the level completed panel
+            UIManager.instance.levelCompletedPanel.SetActive(true);
+
+            //calculate diamonds
+            GameManager.instance.CalculateDiamonds();
+
+            //Show the current diamond
+            UIManager.instance.currentDiamondText.text = GameManager.instance.CurrentDiamond.ToString();
+
+            //Show the diamond rate
+            UIManager.instance.diamondRateText.text = "%" + (100 *GameManager.instance.DiamondLevelRate).ToString();
+
+            //Show the total diamond
+            UIManager.instance.totalDiamondText.text = GameManager.instance.TotalDiamond.ToString();
+
+            //close level panel
+            UIManager.instance.levelPanel.SetActive(false);
         }
     }
 }

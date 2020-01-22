@@ -13,9 +13,10 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector3 targetPos;
     private float speed = 2.0f;
+    private float clampXValue = 3.0f;
 
-    public Vector3 ForcePower { get; set; }
-    public Vector3 OriginalForcePower { get; set; }
+    public Vector3 ForcePower { get; private set; }
+    
 
     private void Awake()
     {
@@ -24,18 +25,16 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
-        OriginalForcePower = Vector3.forward * Time.deltaTime * forceSpeed * rigid.mass * 10.000f;
         ForcePower = Vector3.forward * Time.deltaTime * forceSpeed * rigid.mass * 10.000f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (GameManager.instance.Started)
-        {
-            if (rigid.velocity.magnitude < 5f)
-                rigid.AddRelativeForce(ForcePower);
-        }
+        if (GameManager.instance.Started && !GameManager.instance.Paused && rigid.velocity.magnitude < 5f)
+            rigid.AddRelativeForce(ForcePower);
+        else if (GameManager.instance.Paused)
+            StopThePlayer();
     }
 
     public void MoveWithDrag()
@@ -46,8 +45,13 @@ public class PlayerMovement : MonoBehaviour
 
 
         Vector3 followXonly = new Vector3(targetPos.x, transform.position.y, transform.position.z);
-        followXonly.x = Mathf.Clamp(followXonly.x, -3.5f, 3.5f);
+        followXonly.x = Mathf.Clamp(followXonly.x, -clampXValue, clampXValue);
         transform.position = Vector3.Lerp(transform.position, followXonly, speed * Time.deltaTime);
+    }
+
+    public void StopThePlayer()
+    {
+        rigid.velocity = Vector3.zero;
     }
 
 

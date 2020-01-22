@@ -10,10 +10,25 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
 
-    [SerializeField] private GameObject title;
-    [SerializeField] private GameObject levelPanel;
+    [Header("Panels")]
 
+    public GameObject levelCompletedPanel;
+    public GameObject levelFailedPanel;
+    public GameObject levelPanel;
+
+
+    [Header("Texts")]
+    [SerializeField] private Text currentLevelText;
+    [SerializeField] private Text nextLevelText;
+    public Text currentDiamondText;
+    public Text diamondRateText;
+    public Text totalDiamondText;
+
+    [Header("Images")]
     public Image[] checkPointImages;
+
+    [Header("GameObjects")]
+    [SerializeField] private GameObject title;
 
     private void Awake()
     {
@@ -24,6 +39,8 @@ public class UIManager : MonoBehaviour
     {
         title.gameObject.SetActive(true);
         levelPanel.SetActive(false);
+        levelCompletedPanel.SetActive(false);
+        levelFailedPanel.SetActive(false);
     }
 
     private void Update()
@@ -33,5 +50,8 @@ public class UIManager : MonoBehaviour
             title.SetActive(false);
             levelPanel.SetActive(true);
         }
+
+        currentLevelText.text = GameManager.instance.CurrentLevel.ToString();
+        nextLevelText.text = (GameManager.instance.CurrentLevel + 1).ToString();
     }
 }

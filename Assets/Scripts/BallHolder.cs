@@ -5,15 +5,15 @@ using UnityEngine;
 
 public class BallHolder : MonoBehaviour
 {
-    private int ballCount = 0;
+    public int BallCount { get; set; } = 0;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Ball")
         {
             Destroy(other.gameObject,2f);
-            ballCount++;
-            GetComponentInParent<CheckPoint>().currentPointText.text = ballCount.ToString();
+            BallCount++;
+            GetComponentInParent<CheckPoint>().currentPointText.text = BallCount.ToString();
         }
     }
 }
