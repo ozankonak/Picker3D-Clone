@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    #region Variables
     public static GameManager instance;
     public int CurrentLevel { get; set; } = 1;
     public int PartLevel { get; set; } = 0;
@@ -16,6 +17,10 @@ public class GameManager : MonoBehaviour
     public float DiamondLevelRate { get; set; } = 0;
 
     public int TotalDiamond { get; private set; }
+
+    #endregion
+
+    #region Unity Functions
 
     private void Awake()
     {
@@ -28,19 +33,19 @@ public class GameManager : MonoBehaviour
         Started = false;
 
         if (PlayerPrefs.GetInt("diamond") != 0)
+        {
             TotalDiamond = PlayerPrefs.GetInt("diamond");
+            UIManager.instance.totalDiamondText.text = PlayerPrefs.GetInt("diamond").ToString();
+        }
         else
             TotalDiamond = 0;
 
         DiamondLevelRate = 0;
     }
 
-    private void LevelComplete()
-    {
-        CurrentLevel++;
-        //TODO: Active Level Complete Panel
-    }
+    #endregion
 
+    #region Public Functions
     public void RestartGame()
     {
         SceneManager.LoadScene("Game");
@@ -71,5 +76,5 @@ public class GameManager : MonoBehaviour
         TotalDiamond += CurrentDiamond;
         PlayerPrefs.SetInt("diamond", TotalDiamond);
     }
-
+#endregion
 }

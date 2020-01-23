@@ -7,6 +7,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    #region Variables
+
     [SerializeField] private float forceSpeed = 10f;
 
     private Rigidbody rigid;
@@ -16,7 +18,10 @@ public class PlayerMovement : MonoBehaviour
     private float clampXValue = 3.0f;
 
     public Vector3 ForcePower { get; private set; }
-    
+
+    #endregion
+
+    #region Unity Functions
 
     private void Awake()
     {
@@ -37,6 +42,10 @@ public class PlayerMovement : MonoBehaviour
             StopThePlayer();
     }
 
+    #endregion
+
+    #region Public Functions
+
     public void MoveWithDrag()
     {
         float distance = transform.position.z - Camera.main.transform.position.z;
@@ -54,5 +63,6 @@ public class PlayerMovement : MonoBehaviour
         rigid.velocity = Vector3.zero;
     }
 
+    #endregion
 
 }

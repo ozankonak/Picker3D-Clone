@@ -10,6 +10,8 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
 
+    #region  Variables
+
     [Header("Panels")]
 
     public GameObject levelCompletedPanel;
@@ -29,6 +31,10 @@ public class UIManager : MonoBehaviour
 
     [Header("GameObjects")]
     [SerializeField] private GameObject title;
+
+    #endregion
+
+    #region Unity Functions
 
     private void Awake()
     {
@@ -54,4 +60,6 @@ public class UIManager : MonoBehaviour
         currentLevelText.text = GameManager.instance.CurrentLevel.ToString();
         nextLevelText.text = (GameManager.instance.CurrentLevel + 1).ToString();
     }
+
+#endregion
 }

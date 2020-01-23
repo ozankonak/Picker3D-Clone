@@ -12,8 +12,6 @@ public class FinishPoint : MonoBehaviour
         {
             //Stop the player
             GameManager.instance.Paused = true;
-            //Open the level completed panel
-            UIManager.instance.levelCompletedPanel.SetActive(true);
 
             //calculate diamonds
             GameManager.instance.CalculateDiamonds();
@@ -26,6 +24,9 @@ public class FinishPoint : MonoBehaviour
 
             //Show the total diamond
             UIManager.instance.totalDiamondText.text = GameManager.instance.TotalDiamond.ToString();
+
+            //Open the level completed panel
+            UIManager.instance.levelCompletedPanel.SetActive(true);
 
             //close level panel
             UIManager.instance.levelPanel.SetActive(false);
